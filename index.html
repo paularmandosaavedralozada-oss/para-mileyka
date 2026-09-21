@@ -415,16 +415,16 @@
             name: "Mileyka",
             startDate: new Date("2023-09-21T00:00:00").getTime(),
             letterText: "Él la estaba esperando con flores amarillas... y yo te he esperado toda mi vida para entregarte mi corazón entero.\n\nSabes cuánto amas los tulipanes amarillos, y por eso he construido este pequeño universo donde cada estrella y cada frase gira exclusivamente a tu alrededor. Representan mi amor por ti, la luz de tu sonrisa y la promesa de estar siempre a tu lado llenando tu vida de momentos hermosos.\n\nTe amo con todo mi ser, mi bruja hermosa.",
-            audioUrl: "",
+            audioUrl: "Floricienta — Flores Amarillas [Letra].mp3",
             photos: [
-                "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80",
-                "https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=600&q=80",
-                "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80"
+                "foto1.jpg",
+                "foto2.jpg",
+                "foto3.jpeg"
             ],
             captions: [
-                '"El día en que iluminaste mi universo"',
+                '"Sos mi vida bruja"',
                 '"Tus sonrisas, mis tulipanes amarillos"',
-                '"Juntos por siempre en este viaje estelar"'
+                '"Lejos pero nunca separados"'
             ]
         };
 
@@ -440,9 +440,9 @@
         /* THREE.JS 3D GALAXY SCENE SETUP */
         let scene, camera, renderer;
         let starGroup;
-        let baseRotationSpeed = 0.001;
-        let currentRotationSpeed = 0.001;
-        let targetRotationSpeed = 0.001;
+        let baseRotationSpeed = 0.0001;
+        let currentRotationSpeed = 0.0001;
+        let targetRotationSpeed = 0.0001;
         let phraseInterval = null;
 
         const lovePhrases = [
@@ -450,12 +450,18 @@
             "Te quiero 🌻",
             "Eres mi universo ✨",
             "Mi tulipán hermosa 🌷",
-            "Mileyka & Yo ♾️",
+            "Mileyka & Paul ♾️",
+            "Te amo bruja 💛",
             "Siempre juntos 💕",
             "Mi flor amarilla favorita 💛",
             "Contigo hasta el infinito 🚀",
             "Eres la luz de mi vida 🌟",
             "Para siempre tuyo 👑"
+            "Te amo bruja 💛",
+            "Mi flor amarilla favorita 💛",
+            "Saavedra & Marquez ♾️",
+            "Te amo 🌷",
+            "Mi princesa hermosa 🌷",
         ];
 
         function init3DUniverse() {
