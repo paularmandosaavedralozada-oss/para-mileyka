@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para mi amada Mileyka 💛</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        * {
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030008;
+            color: #f3e8ff;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .font-cursive { font-family: 'Dancing Script', cursive; }
+        .font-romantic { font-family: 'Great Vibes', cursive; }
+
+        .glass-card {
+            background: rgba(18, 8, 32, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(250, 204, 21, 0.3);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(234, 179, 8, 0.15);
+        }
+
+        .glass-gold {
+            background: rgba(234, 179, 8, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(250, 204, 21, 0.45);
+            box-shadow: 0 0 25px rgba(234, 179, 8, 0.25);
+        }
+
+        .glow-title {
+            text-shadow: 0 0 15px rgba(250, 204, 21, 0.8), 0 0 30px rgba(234, 179, 8, 0.6), 0 0 45px rgba(202, 138, 4, 0.4);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.7)) drop-shadow(0 0 25px rgba(250, 204, 21, 0.4)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 25px rgba(250, 204, 21, 1)) drop-shadow(0 0 45px rgba(250, 204, 21, 0.7)); transform: scale(1.05); }
+        }
+
+        .animate-tulip {
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(4deg); }
+        }
+        .animate-float {
+            animation: floatSlow 5s ease-in-out infinite;
+        }
+
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spin-music {
+            animation: spinSlow 6s linear infinite;
+        }
+
+        /* Animated floating love phrases overlay */
+        .love-text-particle {
+            position: absolute;
+            pointer-events: none;
+            font-family: 'Dancing Script', cursive;
+            font-weight: 700;
+            color: #fef08a;
+            text-shadow: 0 0 10px #facc15, 0 0 20px #eab308, 0 0 30px #a21caf;
+            white-space: nowrap;
+            z-index: 30;
+            animation: flyOutText 2.5s ease-out forwards;
+        }
+
+        @keyframes flyOutText {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+            }
+            70% {
+                opacity: 0.95;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--translateX), var(--translateY)) scale(1.6) rotate(var(--rot));
+            }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #05020a; }
+        ::-webkit-scrollbar-thumb { background: #eab308; border-radius: 3px; }
+    </style>
+</head>
+<body class="relative min-h-screen text-slate-100 flex flex-col justify-between" onclick="ensureAudioContext()">
+
+    <!-- Three.js Canvas for Galaxy and 3D Universe -->
+    <div id="canvas-container" class="fixed inset-0 w-full h-full -z-10"></div>
+
+    <!-- Container for HTML/CSS Floating Text Phrases -->
+    <div id="floatingTextContainer" class="fixed inset-0 pointer-events-none z-30 overflow-hidden"></div>
+
+    <!-- Hidden HTML5 Audio Element with multiple sources -->
+    <audio id="floresAudio" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-violin-112282.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Top Floating Audio & Control Bar -->
+    <header class="fixed top-4 right-4 z-40 flex items-center gap-2 md:gap-3">
+        <!-- Flores Amarillas Music Player Button -->
+        <button id="musicBtn" onclick="toggleMusic(event)" class="glass-gold px-3.5 py-2 rounded-full text-yellow-300 hover:text-yellow-100 transition duration-300 flex items-center gap-2.5 shadow-lg group">
+            <div id="musicDisc" class="w-7 h-7 rounded-full border-2 border-yellow-300 flex items-center justify-center bg-yellow-500/20">
+                <i class="fas fa-compact-disc text-sm group-hover:scale-110 transition"></i>
+            </div>
+            <span id="musicStatus" class="text-xs font-bold tracking-wider">Flores Amarillas 🎵</span>
+        </button>
+
+
+        <!-- Config Modal Trigger (Oculto) -->
+<button onclick="openConfigModal(event)" class="hidden glass-card p-2.5 md:p-3 rounded-full text-amber-300 hover:text-white transition duration-300 shadow-lg" title="Personalizar música y fotos">
+    <i class="fas fa-cog text-base"></i>
+</button>
+    </header>
+
+    <!-- Main Interactive Container -->
+    <main class="max-w-4xl mx-auto px-4 pt-12 pb-16 relative z-10 flex flex-col items-center gap-10">
+
+        <!-- Title Section -->
+        <div class="text-center space-y-3 animate-float mt-4">
+            <div class="inline-block px-4 py-1 rounded-full glass-gold text-yellow-300 text-xs font-semibold tracking-widest uppercase mb-1">
+                🌻 Él la estaba esperando con sus Flores Amarillas 🌻
+            </div>
+            <div class="inline-block px-4 py-1 rounded-full glass-gold text-yellow-300 text-xs font-semibold tracking-widest uppercase mb-1">
+                🌻 Te pido disculpas por no poder dartelas en persona amor 🌻
+            </div>
+            <h1 id="heroTitle" class="text-5xl md:text-7xl font-romantic text-yellow-300 glow-title leading-none">
+                Un Universo para Mileyka
+            </h1>
+            <p id="heroSubtitle" class="text-xs md:text-base text-purple-200 max-w-lg mx-auto font-light leading-relaxed">
+                Toca o presiona el <strong class="text-yellow-300 font-semibold">Tulipán Amarillo Mágico</strong> para hacer girar la galaxia y liberar mensajes de amor.
+            </p>
+        </div>
+
+        <!-- Interactive Centerpiece: The Golden Tulip -->
+        <div class="relative flex flex-col items-center justify-center py-6 my-2 group">
+            <div class="absolute w-72 h-72 rounded-full bg-yellow-500/10 blur-3xl pointer-events-none group-hover:bg-yellow-400/25 transition duration-500"></div>
+
+            <!-- Tulip Button -->
+            <button id="tulipBtn" 
+                onmousedown="startSpinning(event)" 
+                onmouseup="stopSpinning(event)" 
+                onmouseleave="stopSpinning(event)" 
+                ontouchstart="startSpinning(event)" 
+                ontouchend="stopSpinning(event)" 
+                class="relative z-20 cursor-pointer focus:outline-none transform hover:scale-110 transition duration-300 animate-tulip active:scale-95">
+                <svg class="w-44 h-44 md:w-56 md:h-56 filter drop-shadow-[0_0_25px_rgba(250,204,21,0.9)]" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 130 C95 160, 105 180, 100 200" stroke="#84cc16" stroke-width="6" stroke-linecap="round"/>
+                    <path d="M98 165 C70 150, 50 160, 45 140 C65 140, 85 155, 96 162" fill="#65a30d"/>
+                    <path d="M102 175 C130 160, 150 170, 155 150 C135 150, 115 165, 104 172" fill="#4d7c0f"/>
+                    <circle cx="100" cy="85" r="45" fill="url(#tulipGlow)" opacity="0.6"/>
+                    <path d="M100 130 C60 120, 45 75, 65 45 C75 75, 90 100, 100 130 Z" fill="url(#petalGradLeft)"/>
+                    <path d="M100 130 C140 120, 155 75, 135 45 C125 75, 110 100, 100 130 Z" fill="url(#petalGradRight)"/>
+                    <path d="M100 135 C75 105, 70 50, 100 30 C130 50, 125 105, 100 135 Z" fill="url(#petalGradCenter)"/>
+                    <path d="M100 135 C82 115, 80 75, 100 55 C120 75, 118 115, 100 135 Z" fill="url(#petalGradFront)"/>
+                    <circle cx="100" cy="45" r="3" fill="#ffffff" opacity="0.9"/>
+                    <circle cx="85" cy="65" r="2" fill="#ffffff" opacity="0.8"/>
+                    <circle cx="115" cy="65" r="2" fill="#ffffff" opacity="0.8"/>
+
+                    <defs>
+                        <radialGradient id="tulipGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#fef08a"/>
+                            <stop offset="100%" stop-color="#eab308" stop-opacity="0"/>
+                        </radialGradient>
+                        <linearGradient id="petalGradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#fef08a"/>
+                            <stop offset="50%" stop-color="#facc15"/>
+                            <stop offset="100%" stop-color="#eab308"/>
+                        </linearGradient>
+                        <linearGradient id="petalGradRight" x1="100%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#fef08a"/>
+                            <stop offset="50%" stop-color="#facc15"/>
+                            <stop offset="100%" stop-color="#ca8a04"/>
+                        </linearGradient>
+                        <linearGradient id="petalGradCenter" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#fffbeb"/>
+                            <stop offset="40%" stop-color="#facc15"/>
+                            <stop offset="100%" stop-color="#a16207"/>
+                        </linearGradient>
+                        <linearGradient id="petalGradFront" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#fef9c3"/>
+                            <stop offset="60%" stop-color="#fde047"/>
+                            <stop offset="100%" stop-color="#eab308"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </button>
+
+            <!-- Instruction Label -->
+            <div id="tulipInstruction" class="mt-2 glass-gold px-5 py-2 rounded-full text-xs text-yellow-200 font-medium flex items-center gap-2 shadow-lg animate-bounce">
+                <i class="fas fa-hand-pointer text-yellow-300"></i>
+                <span>¡Mantén presionado el Tulipán para hacer girar todo!</span>
+            </div>
+        </div>
+
+        <!-- Time Together Counter Card -->
+        <section class="w-full">
+            <div class="glass-card rounded-3xl p-6 md:p-8 text-center relative overflow-hidden">
+                <h2 class="text-xl md:text-2xl font-semibold text-yellow-300 mb-1 flex items-center justify-center gap-2">
+                    <i class="fas fa-hourglass-half text-yellow-400"></i>
+                    <span>Nuestro Tiempo en el Universo</span>
+                </h2>
+                <p class="text-xs text-purple-200/80 mb-6">Contando cada segundo juntos desde nuestra fecha especial</p>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="glass-gold p-4 rounded-2xl">
+                        <span id="counterDays" class="text-3xl md:text-5xl font-bold text-yellow-300 block">0</span>
+                        <span class="text-[10px] md:text-xs text-purple-200 uppercase tracking-widest font-semibold">Días</span>
+                    </div>
+                    <div class="glass-gold p-4 rounded-2xl">
+                        <span id="counterHours" class="text-3xl md:text-5xl font-bold text-yellow-300 block">0</span>
+                        <span class="text-[10px] md:text-xs text-purple-200 uppercase tracking-widest font-semibold">Horas</span>
+                    </div>
+                    <div class="glass-gold p-4 rounded-2xl">
+                        <span id="counterMinutes" class="text-3xl md:text-5xl font-bold text-yellow-300 block">0</span>
+                        <span class="text-[10px] md:text-xs text-purple-200 uppercase tracking-widest font-semibold">Minutos</span>
+                    </div>
+                    <div class="glass-gold p-4 rounded-2xl">
+                        <span id="counterSeconds" class="text-3xl md:text-5xl font-bold text-yellow-300 block">0</span>
+                        <span class="text-[10px] md:text-xs text-purple-200 uppercase tracking-widest font-semibold">Segundos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery with Custom Photo Uploads & Captions -->
+        <section class="w-full">
+            <div class="glass-card rounded-3xl p-6 md:p-8">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-3">
+                    <div class="text-center md:text-left">
+                        <h2 class="text-2xl font-semibold text-yellow-300 flex items-center justify-center md:justify-start gap-2">
+                            <i class="fas fa-camera-retro text-yellow-400"></i>
+                            <span>Nuestros Recuerdos Favoritos</span>
+                        </h2>
+                        <p class="text-xs text-purple-200">Personaliza tus fotos con Mileyka directamente desde tu teléfono o PC</p>
+                    </div>
+                    <button onclick="openConfigModal(event)" class="glass-gold px-4 py-2 rounded-xl text-xs text-yellow-300 font-semibold hover:bg-yellow-400/20 transition flex items-center gap-2">
+                        <i class="fas fa-upload"></i> Subir / Cambiar Fotos
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Photo 1 Card -->
+                    <div class="glass-gold rounded-2xl p-4 group hover:border-yellow-400 transition duration-300 flex flex-col items-center">
+                        <div class="w-full h-52 rounded-xl overflow-hidden mb-3 bg-purple-950/60 relative border border-yellow-300/30">
+                            <img id="galleryImg0" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" alt="Recuerdo 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <p id="caption0" class="text-xs text-yellow-200 font-semibold text-center italic">"El día en que iluminaste mi universo"</p>
+                        <label class="mt-3 cursor-pointer text-[11px] text-yellow-400 hover:text-white underline flex items-center gap-1">
+                            <i class="fas fa-image"></i> Cambiar esta foto
+                            <input type="file" accept="image/*" class="hidden" onchange="handleSinglePhotoUpload(event, 0)">
+                        </label>
+                    </div>
+
+                    <!-- Photo 2 Card -->
+                    <div class="glass-gold rounded-2xl p-4 group hover:border-yellow-400 transition duration-300 flex flex-col items-center">
+                        <div class="w-full h-52 rounded-xl overflow-hidden mb-3 bg-purple-950/60 relative border border-yellow-300/30">
+                            <img id="galleryImg1" src="https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=600&q=80" alt="Recuerdo 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <p id="caption1" class="text-xs text-yellow-200 font-semibold text-center italic">"Tus sonrisas, mis tulipanes amarillos"</p>
+                        <label class="mt-3 cursor-pointer text-[11px] text-yellow-400 hover:text-white underline flex items-center gap-1">
+                            <i class="fas fa-image"></i> Cambiar esta foto
+                            <input type="file" accept="image/*" class="hidden" onchange="handleSinglePhotoUpload(event, 1)">
+                        </label>
+                    </div>
+
+                    <!-- Photo 3 Card -->
+                    <div class="glass-gold rounded-2xl p-4 group hover:border-yellow-400 transition duration-300 flex flex-col items-center">
+                        <div class="w-full h-52 rounded-xl overflow-hidden mb-3 bg-purple-950/60 relative border border-yellow-300/30">
+                            <img id="galleryImg2" src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80" alt="Recuerdo 3" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <p id="caption2" class="text-xs text-yellow-200 font-semibold text-center italic">"Juntos por siempre en este viaje estelar"</p>
+                        <label class="mt-3 cursor-pointer text-[11px] text-yellow-400 hover:text-white underline flex items-center gap-1">
+                            <i class="fas fa-image"></i> Cambiar esta foto
+                            <input type="file" accept="image/*" class="hidden" onchange="handleSinglePhotoUpload(event, 2)">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Love Letter Section -->
+        <section class="w-full">
+            <div class="glass-card rounded-3xl p-6 md:p-8 text-center relative">
+                <h2 class="text-2xl font-semibold text-yellow-300 mb-2 flex items-center justify-center gap-2">
+                    <i class="fas fa-envelope-open-text text-yellow-400"></i>
+                    <span>Carta para mi Tulipán Amarillo</span>
+                </h2>
+                <p class="text-xs text-purple-200 mb-6">Haz clic sobre el sobre para desplegar mi mensaje sincero</p>
+
+                <div onclick="toggleLetter()" class="inline-block cursor-pointer transform hover:scale-105 transition duration-300">
+                    <div id="envelopeCard" class="w-64 h-40 md:w-80 md:h-48 bg-gradient-to-br from-amber-500 via-yellow-500 to-amber-600 rounded-2xl shadow-2xl relative flex items-center justify-center p-4 border-2 border-yellow-300/80">
+                        <div class="absolute inset-2 border border-amber-900/30 rounded-xl pointer-events-none"></div>
+                        <div class="text-center text-amber-950">
+                            <i id="envelopeIcon" class="fas fa-envelope text-5xl mb-2 text-amber-900"></i>
+                            <p id="envelopeTitle" class="text-xs font-bold uppercase tracking-wider">Toca para abrir la carta</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="letterBox" class="hidden mt-6 text-left glass-gold p-6 md:p-8 rounded-2xl border border-yellow-400/50 relative animate-fade-in">
+                    <div class="flex justify-between items-center mb-4 border-b border-yellow-400/30 pb-2">
+                        <h3 id="letterGreeting" class="text-xl font-cursive text-yellow-300 font-bold">Para mi amada Mileyka,</h3>
+                        <button onclick="toggleLetter()" class="text-yellow-400 hover:text-white text-xs">
+                            <i class="fas fa-times text-base"></i>
+                        </button>
+                    </div>
+                    <div id="letterBody" class="space-y-4 text-xs md:text-sm leading-relaxed text-purple-100 font-light">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-xs text-purple-300/70 relative z-10">
+        <p>Especialmente creado con todo el amor del mundo para <span class="text-yellow-300 font-bold">Mileyka</span> 💛</p>
+    </footer>
+
+    <!-- Config & Photos Modal -->
+    <div id="configModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full rounded-3xl p-6 md:p-8 max-h-[90vh] overflow-y-auto border border-yellow-400/50">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-lg font-bold text-yellow-300"><i class="fas fa-sliders-h mr-2"></i>Personalizar Sitio</h3>
+                <button onclick="closeConfigModal()" class="text-purple-300 hover:text-white">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <form id="configForm" onsubmit="saveCustomization(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-yellow-200 mb-1">MILEYKA</label>
+                    <input type="text" id="inputName" value="Mileyka" class="w-full bg-purple-950/70 border border-purple-500/40 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-yellow-400">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-yellow-200 mb-1">Música MP3 Personalizada</label>
+                    <div class="space-y-2">
+                        <input type="text" id="inputAudioUrl" placeholder="URL directa MP3 de Flores Amarillas" class="w-full bg-purple-950/70 border border-purple-500/40 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-yellow-400">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] text-purple-300">o subir MP3 de tu dispositivo:</span>
+                            <input type="file" id="inputAudioFile" accept="audio/*" class="text-xs text-yellow-300 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:bg-yellow-500 file:text-black hover:file:bg-yellow-400">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-yellow-200 mb-1">Fecha de Inicio (Aniversario)</label>
+                    <input type="datetime-local" id="inputDate" class="w-full bg-purple-950/70 border border-purple-500/40 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-yellow-400">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-yellow-200 mb-1">Contenido de la Carta de Amor</label>
+                    <textarea id="inputLetter" rows="3" class="w-full bg-purple-950/70 border border-purple-500/40 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-yellow-400"></textarea>
+                </div>
+
+                <!-- Photos Section in Modal -->
+                <div class="border-t border-purple-500/30 pt-3 space-y-3">
+                    <h4 class="text-xs font-bold text-yellow-300">Descripciones de las Fotos:</h4>
+                    <div>
+                        <label class="block text-[11px] text-purple-200 mb-1">Foto 1 - Leyenda:</label>
+                        <input type="text" id="inputCap0" class="w-full bg-purple-950/70 border border-purple-500/40 rounded-xl p-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-purple-200 mb-1">Foto 2 - Leyenda:</label>
+                        <input type="text" id="inputCap1" class="w-full bg-purple-950/70 border border-purple-500/40 rounded-xl p-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-purple-200 mb-1">Foto 3 - Leyenda:</label>
+                        <input type="text" id="inputCap2" class="w-full bg-purple-950/70 border border-purple-500/40 rounded-xl p-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <div class="pt-3 flex gap-3">
+                    <button type="button" onclick="closeConfigModal()" class="w-1/2 py-2.5 rounded-xl bg-purple-900/50 hover:bg-purple-800 text-xs font-semibold transition">Cancelar</button>
+                    <button type="submit" class="w-1/2 py-2.5 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-slate-950 text-xs font-bold transition shadow-lg">Guardar Todo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 glass-gold px-5 py-3 rounded-2xl text-xs text-yellow-200 hidden z-50 shadow-2xl border border-yellow-400/60">
+        <span id="toastMsg">✨ Acción realizada con éxito</span>
+    </div>
+
+    <script>
+
+        
+        /* APP STATE & LOCAL STORAGE */
+        let appData = {
+            name: "Mileyka",
+            startDate: new Date("2023-09-21T00:00:00").getTime(),
+            letterText: "Él la estaba esperando con flores amarillas... y yo te he esperado toda mi vida para entregarte mi corazón entero.\n\nSabes cuánto amas los tulipanes amarillos, y por eso he construido este pequeño universo donde cada estrella y cada frase gira exclusivamente a tu alrededor. Representan mi amor por ti, la luz de tu sonrisa y la promesa de estar siempre a tu lado llenando tu vida de momentos hermosos.\n\nTe amo con todo mi ser, mi bruja hermosa.",
+            audioUrl: "",
+            photos: [
+                "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80",
+                "https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=600&q=80",
+                "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80"
+            ],
+            captions: [
+                '"El día en que iluminaste mi universo"',
+                '"Tus sonrisas, mis tulipanes amarillos"',
+                '"Juntos por siempre en este viaje estelar"'
+            ]
+        };
+
+        if (localStorage.getItem('mileyka_tulip_universe_v2')) {
+            try {
+                const saved = JSON.parse(localStorage.getItem('mileyka_tulip_universe_v2'));
+                appData = { ...appData, ...saved };
+            } catch (e) {
+                console.error("Could not load local storage", e);
+            }
+        }
+
+        /* THREE.JS 3D GALAXY SCENE SETUP */
+        let scene, camera, renderer;
+        let starGroup;
+        let baseRotationSpeed = 0.001;
+        let currentRotationSpeed = 0.001;
+        let targetRotationSpeed = 0.001;
+        let phraseInterval = null;
+
+        const lovePhrases = [
+            "Te amo bruja 💛",
+            "Te quiero 🌻",
+            "Eres mi universo ✨",
+            "Mi tulipán hermosa 🌷",
+            "Mileyka & Yo ♾️",
+            "Siempre juntos 💕",
+            "Mi flor amarilla favorita 💛",
+            "Contigo hasta el infinito 🚀",
+            "Eres la luz de mi vida 🌟",
+            "Para siempre tuyo 👑"
+        ];
+
+        function init3DUniverse() {
+            const container = document.getElementById('canvas-container');
+            scene = new THREE.Scene();
+
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 100;
+
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            starGroup = new THREE.Group();
+            scene.add(starGroup);
+
+            // Create Starfield
+            const starCount = 2500;
+            const starGeometry = new THREE.BufferGeometry();
+            const starPositions = new Float32Array(starCount * 3);
+            const starColors = new Float32Array(starCount * 3);
+
+            for (let i = 0; i < starCount; i++) {
+                starPositions[i * 3] = (Math.random() - 0.5) * 450;
+                starPositions[i * 3 + 1] = (Math.random() - 0.5) * 450;
+                starPositions[i * 3 + 2] = (Math.random() - 0.5) * 450;
+
+                const rChoice = Math.random();
+                if (rChoice > 0.35) {
+                    starColors[i * 3] = 1.0;     // Yellowish
+                    starColors[i * 3 + 1] = 0.85; 
+                    starColors[i * 3 + 2] = 0.2;  
+                } else {
+                    starColors[i * 3] = 0.85;
+                    starColors[i * 3 + 1] = 0.5;
+                    starColors[i * 3 + 2] = 1.0;  // Purpleish
+                }
+            }
+
+            starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+            starGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+
+            const starMaterial = new THREE.PointsMaterial({
+                size: 1.6,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.85
+            });
+
+            const starField = new THREE.Points(starGeometry, starMaterial);
+            starGroup.add(starField);
+
+            // Golden Spiral Galaxy Particles
+            const spiralCount = 1500;
+            const spiralGeo = new THREE.BufferGeometry();
+            const spiralPos = new Float32Array(spiralCount * 3);
+            const spiralCols = new Float32Array(spiralCount * 3);
+
+            for (let i = 0; i < spiralCount; i++) {
+                const r = Math.random() * 160 + 10;
+                const theta = Math.random() * Math.PI * 2;
+
+                spiralPos[i * 3] = r * Math.cos(theta);
+                spiralPos[i * 3 + 1] = r * Math.sin(theta);
+                spiralPos[i * 3 + 2] = (Math.random() - 0.5) * 60;
+
+                spiralCols[i * 3] = 0.98;
+                spiralCols[i * 3 + 1] = 0.8;
+                spiralCols[i * 3 + 2] = 0.15;
+            }
+
+            spiralGeo.setAttribute('position', new THREE.BufferAttribute(spiralPos, 3));
+            spiralGeo.setAttribute('color', new THREE.BufferAttribute(spiralCols, 3));
+
+            const spiralMat = new THREE.PointsMaterial({
+                size: 2.2,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.65
+            });
+
+            const spiralGalaxy = new THREE.Points(spiralGeo, spiralMat);
+            starGroup.add(spiralGalaxy);
+
+            window.addEventListener('resize', onWindowResize);
+            animate3D();
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+            currentRotationSpeed += (targetRotationSpeed - currentRotationSpeed) * 0.05;
+            starGroup.rotation.z += currentRotationSpeed;
+            starGroup.rotation.y += currentRotationSpeed * 0.5;
+            renderer.render(scene, camera);
+        }
+
+        function spawnLovePhrase() {
+            const container = document.getElementById('floatingTextContainer');
+            const el = document.createElement('div');
+            el.className = 'love-text-particle';
+
+            const randomText = lovePhrases[Math.floor(Math.random() * lovePhrases.length)];
+            el.innerText = randomText;
+
+            // Spawn near tulip center
+            const startX = window.innerWidth / 2;
+            const startY = window.innerHeight * 0.38;
+
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 250 + 120;
+            const translateX = Math.cos(angle) * distance;
+            const translateY = Math.sin(angle) * distance;
+            const rotation = (Math.random() - 0.5) * 40;
+
+            el.style.left = `${startX}px`;
+            el.style.top = `${startY}px`;
+            el.style.setProperty('--translateX', `${translateX}px`);
+            el.style.setProperty('--translateY', `${translateY}px`);
+            el.style.setProperty('--rot', `${rotation}deg`);
+
+            container.appendChild(el);
+
+            setTimeout(() => {
+                if (el.parentNode) el.parentNode.removeChild(el);
+            }, 2500);
+        }
+
+        function startSpinning(e) {
+            if (e) e.preventDefault();
+            targetRotationSpeed = 0.07; 
+            document.getElementById('tulipInstruction').innerHTML = '<i class="fas fa-heart text-yellow-300 animate-bounce"></i> <span class="font-bold text-yellow-300">¡TE AMO MILEYKA! ✨</span>';
+            
+            spawnLovePhrase();
+            if (!phraseInterval) {
+                phraseInterval = setInterval(spawnLovePhrase, 220);
+            }
+
+            // Also trigger audio context resume/start
+            ensureAudioContext();
+        }
+
+        function stopSpinning(e) {
+            if (e) e.preventDefault();
+            targetRotationSpeed = baseRotationSpeed;
+            document.getElementById('tulipInstruction').innerHTML = '<i class="fas fa-hand-pointer text-yellow-300"></i> <span>¡Mantén presionado el Tulipán para hacer girar todo!</span>';
+            
+            if (phraseInterval) {
+                clearInterval(phraseInterval);
+                phraseInterval = null;
+            }
+        }
+
+        let audioCtx = null;
+        let isMusicPlaying = false;
+        let musicTimer = null;
+        let musicNoteIndex = 0;
+
+        const melodyNotes = [
+            { note: 392.00, duration: 0.35 }, // G4
+            { note: 440.00, duration: 0.35 }, // A4
+            { note: 493.88, duration: 0.35 }, // B4
+            { note: 523.25, duration: 0.5 },  // C5
+            { note: 493.88, duration: 0.35 }, // B4
+            { note: 440.00, duration: 0.35 }, // A4
+            { note: 392.00, duration: 0.6 },  // G4
+            { note: 329.63, duration: 0.35 }, // E4
+            { note: 392.00, duration: 0.35 }, // G4
+            { note: 440.00, duration: 0.35 }, // A4
+            { note: 493.88, duration: 0.6 },  // B4
+            { note: 523.25, duration: 0.4 },  // C5
+            { note: 587.33, duration: 0.4 },  // D5
+            { note: 659.25, duration: 0.6 },  // E5
+            { note: 587.33, duration: 0.4 },  // D5
+            { note: 523.25, duration: 0.4 },  // C5
+            { note: 493.88, duration: 0.8 }   // B4
+        ];
+
+        function ensureAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function toggleMusic(e) {
+            if (e) e.stopPropagation();
+            ensureAudioContext();
+
+            const audioEl = document.getElementById('floresAudio');
+
+            if (!isMusicPlaying) {
+                // Try playing HTML5 Audio first
+                if (appData.audioUrl) {
+                    audioEl.src = appData.audioUrl;
+                }
+
+                audioEl.play().then(() => {
+                    setMusicUIActive(true);
+                    showToast("🎵 Reproduciendo pista de Flores Amarillas");
+                }).catch((err) => {
+                    console.log("HTML5 Audio prevented, falling back to Web Audio Synth", err);
+                    startSynthMelody();
+                    setMusicUIActive(true);
+                    showToast("🎵 Sonando sintetizador de Flores Amarillas");
+                });
+            } else {
+                audioEl.pause();
+                stopSynthMelody();
+                setMusicUIActive(false);
+            }
+        }
+
+        function setMusicUIActive(active) {
+            isMusicPlaying = active;
+            const disc = document.getElementById('musicDisc');
+            const status = document.getElementById('musicStatus');
+            if (active) {
+                disc.classList.add('spin-music');
+                status.innerText = "Reproduciendo 🎶";
+            } else {
+                disc.classList.remove('spin-music');
+                status.innerText = "Flores Amarillas 🎵";
+            }
+        }
+
+        function startSynthMelody() {
+            musicNoteIndex = 0;
+            playNextSynthNote();
+        }
+
+        function playNextSynthNote() {
+            if (!isMusicPlaying || !audioCtx) return;
+
+            const noteData = melodyNotes[musicNoteIndex];
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(noteData.note, audioCtx.currentTime);
+
+            gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + noteData.duration);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + noteData.duration);
+
+            musicNoteIndex = (musicNoteIndex + 1) % melodyNotes.length;
+            musicTimer = setTimeout(playNextSynthNote, noteData.duration * 1000 + 80);
+        }
+
+        function stopSynthMelody() {
+            if (musicTimer) clearTimeout(musicTimer);
+        }
+
+        /* COUNTER LOGIC */
+        function updateCounter() {
+            const now = new Date().getTime();
+            const diff = now - appData.startDate;
+
+            if (diff < 0) {
+                document.getElementById('counterDays').innerText = "0";
+                document.getElementById('counterHours').innerText = "0";
+                document.getElementById('counterMinutes').innerText = "0";
+                document.getElementById('counterSeconds').innerText = "0";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('counterDays').innerText = days;
+            document.getElementById('counterHours').innerText = hours;
+            document.getElementById('counterMinutes').innerText = minutes;
+            document.getElementById('counterSeconds').innerText = seconds;
+        }
+
+        /* LETTER MODAL TOGGLE */
+        function toggleLetter() {
+            const letterBox = document.getElementById('letterBox');
+            const envelopeIcon = document.getElementById('envelopeIcon');
+            const envelopeTitle = document.getElementById('envelopeTitle');
+
+            if (letterBox.classList.contains('hidden')) {
+                letterBox.classList.remove('hidden');
+                envelopeIcon.className = "fas fa-envelope-open text-5xl mb-2 text-amber-900";
+                envelopeTitle.innerText = "Carta Abierta 💛";
+            } else {
+                letterBox.classList.add('hidden');
+                envelopeIcon.className = "fas fa-envelope text-5xl mb-2 text-amber-900";
+                envelopeTitle.innerText = "Toca para abrir la carta";
+            }
+        }
+
+        /* SINGLE PHOTO DIRECT FILE UPLOAD */
+        function handleSinglePhotoUpload(e, index) {
+            const file = e.target.files[0];
+            if (file) {
+                compressImage(file, 800, 0.7, function(compressedBase64) {
+                    appData.photos[index] = compressedBase64;
+                    saveToStorage();
+                    renderCustomData();
+                    showToast(`✨ Foto ${index + 1} actualizada con éxito`);
+                });
+            }
+        }
+
+        /* IMAGE COMPRESSION UTILITY (Canvas-based) */
+        function compressImage(file, maxWidth, quality, callback) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > maxWidth) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    callback(canvas.toDataURL('image/jpeg', quality));
+                };
+                img.onerror = function() {
+                    callback(evt.target.result);
+                };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        /* SAFE STORAGE HANDLER WITH TRY/CATCH */
+        function saveToStorage() {
+            try {
+                // If audioUrl is an object URL or temporary stream, don't write large data blob
+                const dataToSave = { ...appData };
+                if (dataToSave.audioUrl && dataToSave.audioUrl.startsWith('blob:')) {
+                    dataToSave.audioUrl = ""; // Keep blob in memory only
+                }
+                localStorage.setItem('mileyka_tulip_universe_v2', JSON.stringify(dataToSave));
+            } catch (e) {
+                console.warn("Storage quota exceeded while saving to localStorage:", e);
+                showToast("⚠️ Tu navegador limitó el almacenamiento. Los cambios se aplicaron para esta sesión.");
+            }
+        }
+
+        /* TOAST UTILITY */
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => { toast.classList.add('hidden'); }, 3200);
+        }
+
+        /* RENDER CUSTOM DATA */
+        function renderCustomData() {
+            document.getElementById('heroTitle').innerText = `Un Universo para ${appData.name}`;
+            document.getElementById('letterGreeting').innerText = `Para mi amada ${appData.name},`;
+
+            const paragraphs = appData.letterText.split('\n\n').map(p => `<p>${p}</p>`).join('');
+            document.getElementById('letterBody').innerHTML = paragraphs + `<p class="text-right font-cursive text-yellow-300 text-lg pt-3">Con amor eterno 💛</p>`;
+
+            // Gallery Photos & Captions
+            for (let i = 0; i < 3; i++) {
+                if (appData.photos[i]) {
+                    document.getElementById(`galleryImg${i}`).src = appData.photos[i];
+                }
+                if (appData.captions[i]) {
+                    document.getElementById(`caption${i}`).innerText = appData.captions[i];
+                }
+            }
+        }
+
+        /* MODAL HANDLERS */
+        function openConfigModal(e) {
+            if (e) e.stopPropagation();
+            document.getElementById('inputName').value = appData.name;
+            document.getElementById('inputLetter').value = appData.letterText;
+            document.getElementById('inputAudioUrl').value = appData.audioUrl || '';
+
+            const d = new Date(appData.startDate);
+            const isoString = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            document.getElementById('inputDate').value = isoString;
+
+            document.getElementById('inputCap0').value = appData.captions[0] || '';
+            document.getElementById('inputCap1').value = appData.captions[1] || '';
+            document.getElementById('inputCap2').value = appData.captions[2] || '';
+
+            document.getElementById('configModal').classList.remove('hidden');
+        }
+
+        function closeConfigModal() {
+            document.getElementById('configModal').classList.add('hidden');
+        }
+
+        function saveCustomization(e) {
+            e.preventDefault();
+
+            appData.name = document.getElementById('inputName').value || "Mileyka";
+            appData.letterText = document.getElementById('inputLetter').value;
+            appData.audioUrl = document.getElementById('inputAudioUrl').value;
+
+            const audioFileInput = document.getElementById('inputAudioFile');
+            if (audioFileInput.files && audioFileInput.files[0]) {
+                const file = audioFileInput.files[0];
+                // Use ObjectURL for audio playback during the active session to save storage memory
+                appData.audioUrl = URL.createObjectURL(file);
+                const audioEl = document.getElementById('floresAudio');
+                audioEl.src = appData.audioUrl;
+            }
+        finishSavingModal();
+        }
+
+        function finishSavingModal() {
+            const dateVal = document.getElementById('inputDate').value;
+            if (dateVal) {
+                appData.startDate = new Date(dateVal).getTime();
+            }
+
+            appData.captions[0] = document.getElementById('inputCap0').value;
+            appData.captions[1] = document.getElementById('inputCap1').value;
+            appData.captions[2] = document.getElementById('inputCap2').value;
+
+            saveToStorage();
+
+            renderCustomData();
+            updateCounter();
+            closeConfigModal();
+            showToast("✨ Cambios e imágenes guardados con éxito");
+        }
+
+        /* INITIALIZATION */
+        window.onload = function() {
+            init3DUniverse();
+            renderCustomData();
+            updateCounter();
+            setInterval(updateCounter, 1000);
+        };
+    </script>
+</body>
+</html>
