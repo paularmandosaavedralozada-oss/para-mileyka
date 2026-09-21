@@ -382,17 +382,15 @@
     </div>
 
     <script>
-        /* ESTADO DE LA APLICACIÓN SIN DUPLICADOS */
-        const DEFAULT_AUDIO = "Floricienta%20%E2%80%94%20Flores%20Amarillas%20%5BLetra%5D.mp3";
-
+        
         let appData = {
             name: "Mileyka",
             startDate: new Date("2023-09-21T00:00:00").getTime(),
-            letterText: "Él la estaba esperando con flores amarillas... y yo te he esperado toda mi vida para entregarte mi corazón entero.\n\nSabes cuánto amas los tulipanes amarillos, y por eso he construido este pequeño universo donde cada estrella y cada frase gira exclusivamente a tu alrededor.\n\nTe amo con todo mi ser, mi bruja hermosa.",
-            audioUrl: DEFAULT_AUDIO,
-            photos: ["foto1.jpg", "foto2.jpg", "foto3.jpeg"],
-            captions: ['"Sos mi vida bruja"', '"Tus sonrisas, mis tulipanes amarillos"', '"Lejos pero nunca separados"']
-        };
+            letterText: "Él la estaba esperando con flores amaril...",
+            audioUrl: "Floricienta — Flores Amarillas [Letra].mp3",
+    photos: ["foto1.jpg", "foto2.jpg", "foto3.jpeg"],
+    captions: ['"Sos mi vida bruja"', '"Tus sonrisa es mi felicidad, te amo bruja']
+};
 
         // Carga limpia de LocalStorage
         if (localStorage.getItem('mileyka_tulip_universe_v3')) {
