@@ -113,9 +113,9 @@
     <!-- Container for HTML/CSS Floating Text Phrases -->
     <div id="floatingTextContainer" class="fixed inset-0 pointer-events-none z-30 overflow-hidden"></div>
 
-    <!-- Hidden HTML5 Audio Element with multiple sources -->
+    <!-- Hidden HTML5 Audio Element con el nombre de tu archivo de música -->
     <audio id="floresAudio" loop preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-violin-112282.mp3" type="audio/mpeg">
+        <source src="Floricienta — Flores Amarillas [Letra].mp3" type="audio/mpeg">
     </audio>
 
     <!-- Top Floating Audio & Control Bar -->
@@ -128,11 +128,10 @@
             <span id="musicStatus" class="text-xs font-bold tracking-wider">Flores Amarillas 🎵</span>
         </button>
 
-
-        <!-- Config Modal Trigger (Oculto) -->
-<button onclick="openConfigModal(event)" class="hidden glass-card p-2.5 md:p-3 rounded-full text-amber-300 hover:text-white transition duration-300 shadow-lg" title="Personalizar música y fotos">
-    <i class="fas fa-cog text-base"></i>
-</button>
+        <!-- Config Modal Trigger -->
+        <button onclick="openConfigModal(event)" class="hidden glass-card p-2.5 md:p-3 rounded-full text-amber-300 hover:text-white transition duration-300 shadow-lg" title="Personalizar música y fotos">
+            <i class="fas fa-cog text-base"></i>
+        </button>
     </header>
 
     <!-- Main Interactive Container -->
@@ -144,7 +143,7 @@
                 🌻 Él la estaba esperando con sus Flores Amarillas 🌻
             </div>
             <div class="inline-block px-4 py-1 rounded-full glass-gold text-yellow-300 text-xs font-semibold tracking-widest uppercase mb-1">
-                🌻 Te pido disculpas por no poder dartelas en persona amor 🌻
+                🌻 Te pido disculpas por no poder dártelas en persona amor 🌻
             </div>
             <h1 id="heroTitle" class="text-5xl md:text-7xl font-romantic text-yellow-300 glow-title leading-none">
                 Un Universo para Mileyka
@@ -265,9 +264,9 @@
                     <!-- Photo 1 Card -->
                     <div class="glass-gold rounded-2xl p-4 group hover:border-yellow-400 transition duration-300 flex flex-col items-center">
                         <div class="w-full h-52 rounded-xl overflow-hidden mb-3 bg-purple-950/60 relative border border-yellow-300/30">
-                            <img id="galleryImg0" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" alt="Recuerdo 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <img id="galleryImg0" src="foto1.jpg" alt="Recuerdo 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                         </div>
-                        <p id="caption0" class="text-xs text-yellow-200 font-semibold text-center italic">"El día en que iluminaste mi universo"</p>
+                        <p id="caption0" class="text-xs text-yellow-200 font-semibold text-center italic">"Sos mi vida bruja"</p>
                         <label class="mt-3 cursor-pointer text-[11px] text-yellow-400 hover:text-white underline flex items-center gap-1">
                             <i class="fas fa-image"></i> Cambiar esta foto
                             <input type="file" accept="image/*" class="hidden" onchange="handleSinglePhotoUpload(event, 0)">
@@ -277,7 +276,7 @@
                     <!-- Photo 2 Card -->
                     <div class="glass-gold rounded-2xl p-4 group hover:border-yellow-400 transition duration-300 flex flex-col items-center">
                         <div class="w-full h-52 rounded-xl overflow-hidden mb-3 bg-purple-950/60 relative border border-yellow-300/30">
-                            <img id="galleryImg1" src="https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=600&q=80" alt="Recuerdo 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <img id="galleryImg1" src="foto2.jpg" alt="Recuerdo 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                         </div>
                         <p id="caption1" class="text-xs text-yellow-200 font-semibold text-center italic">"Tus sonrisas, mis tulipanes amarillos"</p>
                         <label class="mt-3 cursor-pointer text-[11px] text-yellow-400 hover:text-white underline flex items-center gap-1">
@@ -289,9 +288,9 @@
                     <!-- Photo 3 Card -->
                     <div class="glass-gold rounded-2xl p-4 group hover:border-yellow-400 transition duration-300 flex flex-col items-center">
                         <div class="w-full h-52 rounded-xl overflow-hidden mb-3 bg-purple-950/60 relative border border-yellow-300/30">
-                            <img id="galleryImg2" src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80" alt="Recuerdo 3" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <img id="galleryImg2" src="foto3.jpeg" alt="Recuerdo 3" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                         </div>
-                        <p id="caption2" class="text-xs text-yellow-200 font-semibold text-center italic">"Juntos por siempre en este viaje estelar"</p>
+                        <p id="caption2" class="text-xs text-yellow-200 font-semibold text-center italic">"Lejos pero nunca separados"</p>
                         <label class="mt-3 cursor-pointer text-[11px] text-yellow-400 hover:text-white underline flex items-center gap-1">
                             <i class="fas fa-image"></i> Cambiar esta foto
                             <input type="file" accept="image/*" class="hidden" onchange="handleSinglePhotoUpload(event, 2)">
@@ -408,8 +407,6 @@
     </div>
 
     <script>
-
-        
         /* APP STATE & LOCAL STORAGE */
         let appData = {
             name: "Mileyka",
@@ -456,12 +453,12 @@
             "Mi flor amarilla favorita 💛",
             "Contigo hasta el infinito 🚀",
             "Eres la luz de mi vida 🌟",
-            "Para siempre tuyo 👑"
+            "Para siempre tuyo 👑",
             "Te amo bruja 💛",
             "Mi flor amarilla favorita 💛",
             "Saavedra & Marquez ♾️",
             "Te amo 🌷",
-            "Mi princesa hermosa 🌷",
+            "Mi princesa hermosa 🌷"
         ];
 
         function init3DUniverse() {
@@ -573,163 +570,79 @@
             const randomText = lovePhrases[Math.floor(Math.random() * lovePhrases.length)];
             el.innerText = randomText;
 
-            // Spawn near tulip center
-            const startX = window.innerWidth / 2;
-            const startY = window.innerHeight * 0.38;
+            const tulipBtn = document.getElementById('tulipBtn');
+            const rect = tulipBtn.getBoundingClientRect();
+            const startX = rect.left + rect.width / 2;
+            const startY = rect.top + rect.height / 2;
+
+            el.style.left = startX + 'px';
+            el.style.top = startY + 'px';
 
             const angle = Math.random() * Math.PI * 2;
-            const distance = Math.random() * 250 + 120;
-            const translateX = Math.cos(angle) * distance;
-            const translateY = Math.sin(angle) * distance;
-            const rotation = (Math.random() - 0.5) * 40;
+            const dist = 180 + Math.random() * 220;
+            const tx = Math.cos(angle) * dist;
+            const ty = Math.sin(angle) * dist;
+            const rot = (Math.random() - 0.5) * 40;
 
-            el.style.left = `${startX}px`;
-            el.style.top = `${startY}px`;
-            el.style.setProperty('--translateX', `${translateX}px`);
-            el.style.setProperty('--translateY', `${translateY}px`);
-            el.style.setProperty('--rot', `${rotation}deg`);
+            el.style.setProperty('--translateX', `${tx}px`);
+            el.style.setProperty('--translateY', `${ty}px`);
+            el.style.setProperty('--rot', `${rot}deg`);
 
             container.appendChild(el);
 
             setTimeout(() => {
-                if (el.parentNode) el.parentNode.removeChild(el);
+                if (el && el.parentNode) {
+                    el.parentNode.removeChild(el);
+                }
             }, 2500);
         }
 
         function startSpinning(e) {
-            if (e) e.preventDefault();
-            targetRotationSpeed = 0.07; 
-            document.getElementById('tulipInstruction').innerHTML = '<i class="fas fa-heart text-yellow-300 animate-bounce"></i> <span class="font-bold text-yellow-300">¡TE AMO MILEYKA! ✨</span>';
-            
+            targetRotationSpeed = 0.025;
             spawnLovePhrase();
             if (!phraseInterval) {
                 phraseInterval = setInterval(spawnLovePhrase, 220);
             }
-
-            // Also trigger audio context resume/start
-            ensureAudioContext();
         }
 
         function stopSpinning(e) {
-            if (e) e.preventDefault();
             targetRotationSpeed = baseRotationSpeed;
-            document.getElementById('tulipInstruction').innerHTML = '<i class="fas fa-hand-pointer text-yellow-300"></i> <span>¡Mantén presionado el Tulipán para hacer girar todo!</span>';
-            
             if (phraseInterval) {
                 clearInterval(phraseInterval);
                 phraseInterval = null;
             }
         }
 
-        let audioCtx = null;
-        let isMusicPlaying = false;
-        let musicTimer = null;
-        let musicNoteIndex = 0;
-
-        const melodyNotes = [
-            { note: 392.00, duration: 0.35 }, // G4
-            { note: 440.00, duration: 0.35 }, // A4
-            { note: 493.88, duration: 0.35 }, // B4
-            { note: 523.25, duration: 0.5 },  // C5
-            { note: 493.88, duration: 0.35 }, // B4
-            { note: 440.00, duration: 0.35 }, // A4
-            { note: 392.00, duration: 0.6 },  // G4
-            { note: 329.63, duration: 0.35 }, // E4
-            { note: 392.00, duration: 0.35 }, // G4
-            { note: 440.00, duration: 0.35 }, // A4
-            { note: 493.88, duration: 0.6 },  // B4
-            { note: 523.25, duration: 0.4 },  // C5
-            { note: 587.33, duration: 0.4 },  // D5
-            { note: 659.25, duration: 0.6 },  // E5
-            { note: 587.33, duration: 0.4 },  // D5
-            { note: 523.25, duration: 0.4 },  // C5
-            { note: 493.88, duration: 0.8 }   // B4
-        ];
-
-        function ensureAudioContext() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-        }
-
+        /* MUSIC PLAYER CONTROL */
+        let isPlaying = false;
         function toggleMusic(e) {
             if (e) e.stopPropagation();
-            ensureAudioContext();
-
-            const audioEl = document.getElementById('floresAudio');
-
-            if (!isMusicPlaying) {
-                // Try playing HTML5 Audio first
-                if (appData.audioUrl) {
-                    audioEl.src = appData.audioUrl;
-                }
-
-                audioEl.play().then(() => {
-                    setMusicUIActive(true);
-                    showToast("🎵 Reproduciendo pista de Flores Amarillas");
-                }).catch((err) => {
-                    console.log("HTML5 Audio prevented, falling back to Web Audio Synth", err);
-                    startSynthMelody();
-                    setMusicUIActive(true);
-                    showToast("🎵 Sonando sintetizador de Flores Amarillas");
-                });
-            } else {
-                audioEl.pause();
-                stopSynthMelody();
-                setMusicUIActive(false);
-            }
-        }
-
-        function setMusicUIActive(active) {
-            isMusicPlaying = active;
+            const audio = document.getElementById('floresAudio');
             const disc = document.getElementById('musicDisc');
             const status = document.getElementById('musicStatus');
-            if (active) {
-                disc.classList.add('spin-music');
-                status.innerText = "Reproduciendo 🎶";
+
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    disc.classList.add('spin-music');
+                    status.innerText = "Reproduciendo 🎵";
+                }).catch(err => {
+                    console.error("Audio play blocked", err);
+                    showToast("Toca la pantalla e intenta de nuevo");
+                });
             } else {
+                audio.pause();
+                isPlaying = false;
                 disc.classList.remove('spin-music');
                 status.innerText = "Flores Amarillas 🎵";
             }
         }
 
-        function startSynthMelody() {
-            musicNoteIndex = 0;
-            playNextSynthNote();
+        function ensureAudioContext() {
+            // Optional autoplay trigger on first touch
         }
 
-        function playNextSynthNote() {
-            if (!isMusicPlaying || !audioCtx) return;
-
-            const noteData = melodyNotes[musicNoteIndex];
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(noteData.note, audioCtx.currentTime);
-
-            gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + 0.05);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + noteData.duration);
-
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-
-            osc.start();
-            osc.stop(audioCtx.currentTime + noteData.duration);
-
-            musicNoteIndex = (musicNoteIndex + 1) % melodyNotes.length;
-            musicTimer = setTimeout(playNextSynthNote, noteData.duration * 1000 + 80);
-        }
-
-        function stopSynthMelody() {
-            if (musicTimer) clearTimeout(musicTimer);
-        }
-
-        /* COUNTER LOGIC */
+        /* TIME COUNTER */
         function updateCounter() {
             const now = new Date().getTime();
             const diff = now - appData.startDate;
@@ -753,115 +666,36 @@
             document.getElementById('counterSeconds').innerText = seconds;
         }
 
-        /* LETTER MODAL TOGGLE */
+        /* LOVE LETTER TOGGLE */
+        let letterOpen = false;
         function toggleLetter() {
             const letterBox = document.getElementById('letterBox');
-            const envelopeIcon = document.getElementById('envelopeIcon');
-            const envelopeTitle = document.getElementById('envelopeTitle');
+            const icon = document.getElementById('envelopeIcon');
+            const title = document.getElementById('envelopeTitle');
 
-            if (letterBox.classList.contains('hidden')) {
+            letterOpen = !letterOpen;
+
+            if (letterOpen) {
                 letterBox.classList.remove('hidden');
-                envelopeIcon.className = "fas fa-envelope-open text-5xl mb-2 text-amber-900";
-                envelopeTitle.innerText = "Carta Abierta 💛";
+                icon.className = 'fas fa-envelope-open text-5xl mb-2 text-amber-900';
+                title.innerText = 'Carta Abierta ✨';
             } else {
                 letterBox.classList.add('hidden');
-                envelopeIcon.className = "fas fa-envelope text-5xl mb-2 text-amber-900";
-                envelopeTitle.innerText = "Toca para abrir la carta";
+                icon.className = 'fas fa-envelope text-5xl mb-2 text-amber-900';
+                title.innerText = 'Toca para abrir la carta';
             }
         }
 
-        /* SINGLE PHOTO DIRECT FILE UPLOAD */
-        function handleSinglePhotoUpload(e, index) {
-            const file = e.target.files[0];
-            if (file) {
-                compressImage(file, 800, 0.7, function(compressedBase64) {
-                    appData.photos[index] = compressedBase64;
-                    saveToStorage();
-                    renderCustomData();
-                    showToast(`✨ Foto ${index + 1} actualizada con éxito`);
-                });
-            }
-        }
-
-        /* IMAGE COMPRESSION UTILITY (Canvas-based) */
-        function compressImage(file, maxWidth, quality, callback) {
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    let width = img.width;
-                    let height = img.height;
-                    if (width > maxWidth) {
-                        height = Math.round((height * maxWidth) / width);
-                        width = maxWidth;
-                    }
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-                    callback(canvas.toDataURL('image/jpeg', quality));
-                };
-                img.onerror = function() {
-                    callback(evt.target.result);
-                };
-                img.src = evt.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        /* SAFE STORAGE HANDLER WITH TRY/CATCH */
-        function saveToStorage() {
-            try {
-                // If audioUrl is an object URL or temporary stream, don't write large data blob
-                const dataToSave = { ...appData };
-                if (dataToSave.audioUrl && dataToSave.audioUrl.startsWith('blob:')) {
-                    dataToSave.audioUrl = ""; // Keep blob in memory only
-                }
-                localStorage.setItem('mileyka_tulip_universe_v2', JSON.stringify(dataToSave));
-            } catch (e) {
-                console.warn("Storage quota exceeded while saving to localStorage:", e);
-                showToast("⚠️ Tu navegador limitó el almacenamiento. Los cambios se aplicaron para esta sesión.");
-            }
-        }
-
-        /* TOAST UTILITY */
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMsg').innerText = msg;
-            toast.classList.remove('hidden');
-            setTimeout(() => { toast.classList.add('hidden'); }, 3200);
-        }
-
-        /* RENDER CUSTOM DATA */
-        function renderCustomData() {
-            document.getElementById('heroTitle').innerText = `Un Universo para ${appData.name}`;
-            document.getElementById('letterGreeting').innerText = `Para mi amada ${appData.name},`;
-
-            const paragraphs = appData.letterText.split('\n\n').map(p => `<p>${p}</p>`).join('');
-            document.getElementById('letterBody').innerHTML = paragraphs + `<p class="text-right font-cursive text-yellow-300 text-lg pt-3">Con amor eterno 💛</p>`;
-
-            // Gallery Photos & Captions
-            for (let i = 0; i < 3; i++) {
-                if (appData.photos[i]) {
-                    document.getElementById(`galleryImg${i}`).src = appData.photos[i];
-                }
-                if (appData.captions[i]) {
-                    document.getElementById(`caption${i}`).innerText = appData.captions[i];
-                }
-            }
-        }
-
-        /* MODAL HANDLERS */
+        /* CONFIG MODAL & UPLOADS */
         function openConfigModal(e) {
             if (e) e.stopPropagation();
             document.getElementById('inputName').value = appData.name;
+            document.getElementById('inputAudioUrl').value = appData.audioUrl.startsWith('data:') ? '' : appData.audioUrl;
             document.getElementById('inputLetter').value = appData.letterText;
-            document.getElementById('inputAudioUrl').value = appData.audioUrl || '';
 
-            const d = new Date(appData.startDate);
-            const isoString = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-            document.getElementById('inputDate').value = isoString;
+            const dateObj = new Date(appData.startDate);
+            const iso = dateObj.toISOString().slice(0, 16);
+            document.getElementById('inputDate').value = iso;
 
             document.getElementById('inputCap0').value = appData.captions[0] || '';
             document.getElementById('inputCap1').value = appData.captions[1] || '';
@@ -874,49 +708,121 @@
             document.getElementById('configModal').classList.add('hidden');
         }
 
+        function handleSinglePhotoUpload(event, index) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                appData.photos[index] = e.target.result;
+                document.getElementById(`galleryImg${index}`).src = e.target.result;
+                saveStateToStorage();
+                showToast(`Foto ${index + 1} actualizada con éxito ✨`);
+            };
+            reader.readAsDataURL(file);
+        }
+
         function saveCustomization(e) {
             e.preventDefault();
 
-            appData.name = document.getElementById('inputName').value || "Mileyka";
-            appData.letterText = document.getElementById('inputLetter').value;
-            appData.audioUrl = document.getElementById('inputAudioUrl').value;
+            const nameInput = document.getElementById('inputName').value.trim();
+            if (nameInput) appData.name = nameInput;
 
-            const audioFileInput = document.getElementById('inputAudioFile');
-            if (audioFileInput.files && audioFileInput.files[0]) {
-                const file = audioFileInput.files[0];
-                // Use ObjectURL for audio playback during the active session to save storage memory
-                appData.audioUrl = URL.createObjectURL(file);
-                const audioEl = document.getElementById('floresAudio');
-                audioEl.src = appData.audioUrl;
+            const dateInput = document.getElementById('inputDate').value;
+            if (dateInput) {
+                appData.startDate = new Date(dateInput).getTime();
             }
-        finishSavingModal();
-        }
 
-        function finishSavingModal() {
-            const dateVal = document.getElementById('inputDate').value;
-            if (dateVal) {
-                appData.startDate = new Date(dateVal).getTime();
-            }
+            const letterInput = document.getElementById('inputLetter').value;
+            if (letterInput) appData.letterText = letterInput;
 
             appData.captions[0] = document.getElementById('inputCap0').value;
             appData.captions[1] = document.getElementById('inputCap1').value;
             appData.captions[2] = document.getElementById('inputCap2').value;
 
-            saveToStorage();
+            const urlInput = document.getElementById('inputAudioUrl').value.trim();
+            const audioFileInput = document.getElementById('inputAudioFile').files[0];
 
-            renderCustomData();
-            updateCounter();
-            closeConfigModal();
-            showToast("✨ Cambios e imágenes guardados con éxito");
+            if (audioFileInput) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    appData.audioUrl = evt.target.result;
+                    document.getElementById('floresAudio').src = evt.target.result;
+                    finishSaveConfig();
+                };
+                reader.readAsDataURL(audioFileInput);
+            } else {
+                if (urlInput) {
+                    appData.audioUrl = urlInput;
+                    document.getElementById('floresAudio').src = urlInput;
+                }
+                finishSaveConfig();
+            }
         }
 
-        /* INITIALIZATION */
-        window.onload = function() {
+        function finishSaveConfig() {
+            saveStateToStorage();
+            applyAppDataToUI();
+            closeConfigModal();
+            showToast("¡Personalización guardada! ✨");
+        }
+
+        function saveStateToStorage() {
+            try {
+                localStorage.setItem('mileyka_tulip_universe_v2', JSON.stringify(appData));
+            } catch (err) {
+                console.warn("Storage quota exceeded or disabled", err);
+            }
+        }
+
+        function applyAppDataToUI() {
+            document.getElementById('heroTitle').innerText = `Un Universo para ${appData.name}`;
+
+            for (let i = 0; i < 3; i++) {
+                if (appData.photos[i]) {
+                    document.getElementById(`galleryImg${i}`).src = appData.photos[i];
+                }
+                if (appData.captions[i] !== undefined) {
+                    document.getElementById(`caption${i}`).innerText = appData.captions[i];
+                }
+            }
+
+            document.getElementById('letterGreeting').innerText = `Para mi amada ${appData.name},`;
+            const letterContainer = document.getElementById('letterBody');
+            letterContainer.innerHTML = '';
+            const paragraphs = appData.letterText.split('\n');
+            paragraphs.forEach(p => {
+                if (p.trim() !== '') {
+                    const el = document.createElement('p');
+                    el.innerText = p;
+                    letterContainer.appendChild(el);
+                }
+            });
+
+            if (appData.audioUrl) {
+                const audioEl = document.getElementById('floresAudio');
+                if (audioEl.src !== appData.audioUrl && !audioEl.src.endsWith(appData.audioUrl)) {
+                    audioEl.src = appData.audioUrl;
+                }
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        /* INIT ON LOAD */
+        window.addEventListener('DOMContentLoaded', () => {
             init3DUniverse();
-            renderCustomData();
-            updateCounter();
+            applyAppDataToUI();
             setInterval(updateCounter, 1000);
-        };
+            updateCounter();
+        });
     </script>
 </body>
 </html>
